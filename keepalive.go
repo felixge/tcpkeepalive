@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-// EnableKeepAlive enables TCP keepalive for the given conn, which must be a
+// EnableKeepAlive enables TCP keepalive for the given conn. conn must be a
 // *tcp.TCPConn, the net.Conn type is merely accepted for convenience. The
 // returned Conn allows overwriting the default keepalive parameters used by
 // the operating system.
