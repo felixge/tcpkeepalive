@@ -12,10 +12,9 @@ import (
 	"time"
 )
 
-// EnableKeepAlive enables TCP keepalive for the given conn. conn must be a
-// *tcp.TCPConn, the net.Conn type is merely accepted for convenience. The
-// returned Conn allows overwriting the default keepalive parameters used by
-// the operating system.
+// EnableKeepAlive enables TCP keepalive for the given conn, which must be a
+// *tcp.TCPConn. The returned Conn allows overwriting the default keepalive
+// parameters used by the operating system.
 func EnableKeepAlive(conn net.Conn) (*Conn, error) {
 	tcp, ok := conn.(*net.TCPConn)
 	if !ok {
