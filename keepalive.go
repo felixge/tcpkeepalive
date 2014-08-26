@@ -37,20 +37,21 @@ type Conn struct {
 	fd int
 }
 
-// The time (in seconds) the connection needs to remain idle before TCP starts
-// sending keepalive probes.
-func (c *Conn) SetIdle(d time.Duration) error {
+// SetKeepAliveIdle sets the time (in seconds) the connection needs to remain
+// idle before TCP starts sending keepalive probes.
+func (c *Conn) SetKeepAliveIdle(d time.Duration) error {
 	return setIdle(c.fd, secs(d))
 }
 
-// The maximum number of keepalive probes TCP should send before dropping the
-// connection.
-func (c *Conn) SetCount(n int) error {
+// SetKeepAliveCount sets the maximum number of keepalive probes TCP should
+// send before dropping the connection.
+func (c *Conn) SetKeepAliveCount(n int) error {
 	return setCount(c.fd, n)
 }
 
-// The time (in seconds) between individual keepalive probes.
-func (c *Conn) SetInterval(d time.Duration) error {
+// SetKeepAliveInterval sets the time (in seconds) between individual keepalive
+// probes.
+func (c *Conn) SetKeepAliveInterval(d time.Duration) error {
 	return setInterval(c.fd, secs(d))
 }
 
