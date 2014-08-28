@@ -1,4 +1,4 @@
-// +build freebsd dragonfly
+// +build dragonfly freebsd netbsd
 
 package tcpkeepalive
 
