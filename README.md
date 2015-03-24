@@ -1,6 +1,6 @@
 # tcpkeepalive
 
-Known Issues: Some problems with the implementation were [reported](https://groups.google.com/d/msg/golang-nuts/rRu6ibLNdeI/TIzShZCmbzwJ), I'll try to fix them when I get a chance, or if somebody sends a PR.
+**Known Issues:** Some problems with the implementation were [reported](https://groups.google.com/d/msg/golang-nuts/rRu6ibLNdeI/TIzShZCmbzwJ), I'll try to fix them when I get a chance, or if somebody sends a PR.
 
 Package tcpkeepalive implements additional TCP keepalive control beyond what is
 currently offered by the net pkg.
