@@ -10,6 +10,8 @@ package tcpkeepalive
 import (
 	"fmt"
 	"net"
+	"os"
+	"syscall"
 
 	"time"
 )
@@ -60,4 +62,50 @@ func (c *Conn) SetKeepAliveInterval(d time.Duration) error {
 func secs(d time.Duration) int {
 	d += (time.Second - time.Nanosecond)
 	return int(d.Seconds())
+}
+
+// Enable TCP keepalive in non-blocking mode with given settings for
+// the connection, which must be a *tcp.TCPConn.
+func SetKeepAlive(c net.Conn, idleTime time.Duration, count int, interval time.Duration) (err error) {
+
+	conn, ok := c.(*net.TCPConn)
+	if !ok {
+		return fmt.Errorf("Bad connection type: %T", c)
+	}
+
+	if err := conn.SetKeepAlive(true); err != nil {
+		return err
+	}
+
+	var f *os.File
+	if f, err = conn.File(); err != nil {
+		return err
+	}
+
+	fd := int(f.Fd())
+
+	if err = setIdle(fd, secs(idleTime)); err != nil {
+		return err
+	}
+
+	if err = setCount(fd, count); err != nil {
+		return err
+	}
+
+	if err = setInterval(fd, secs(interval)); err != nil {
+		return err
+	}
+
+	if err = setNonblock(fd); err != nil {
+		return err
+	}
+
+	f.Close()
+
+	return nil
+}
+
+func setNonblock(fd int) error {
+	return os.NewSyscallError("setsockopt", syscall.SetNonblock(fd, true))
+
 }
