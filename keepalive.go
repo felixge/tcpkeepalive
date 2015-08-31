@@ -78,9 +78,11 @@ func SetKeepAlive(c net.Conn, idleTime time.Duration, count int, interval time.D
 	}
 
 	var f *os.File
+
 	if f, err = conn.File(); err != nil {
 		return err
 	}
+	defer f.Close()
 
 	fd := int(f.Fd())
 
@@ -99,8 +101,6 @@ func SetKeepAlive(c net.Conn, idleTime time.Duration, count int, interval time.D
 	if err = setNonblock(fd); err != nil {
 		return err
 	}
-
-	f.Close()
 
 	return nil
 }
