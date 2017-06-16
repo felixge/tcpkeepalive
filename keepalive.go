@@ -31,6 +31,9 @@ func EnableKeepAlive(conn net.Conn) (*Conn, error) {
 	if err != nil {
 		return nil, err
 	}
+	if err := file.Close(); err != nil {
+		return nil, err
+	}
 	fd := int(file.Fd())
 	return &Conn{TCPConn: tcp, fd: fd}, nil
 }
